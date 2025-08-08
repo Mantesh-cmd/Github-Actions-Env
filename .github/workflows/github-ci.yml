@@ -1,0 +1,45 @@
+name: Env and Secrets Practice
+
+on: 
+    push:
+        branches: 
+            - main
+            - dev-**
+    pull_request:
+        types: [opened, opened]
+    workflow_dispatch:
+
+## Workflow level secrets
+env:
+    WORKFLOW_LEVEL_VARIABLE: "wifnioewnioewfoew"
+    GLOBAL_SECRET: ${{secrets.GLOBAL_SECRET}}
+    GLOBAL_VAR: ${{secrets.JOB_SECRET}}
+    
+jobs:
+    env-test:
+        runs-on: ubuntu-latest
+
+        #Job level secrets
+        env: 
+            JOB_SECRET: ${{vars.JOB_SECRET}}
+            JOB_VAR: ${{vars.JOB_VAR}}
+
+        steps:
+            - name: Workflow and Job Level Vars and Secrets
+              run: |
+                echo "WORKFLOW_LEVEL_VARIABLE: $WORKFLOW_LEVEL_VARIABLE"
+                echo "GLOBAL_VAR: $GLOBAL_VAR"
+                echo "GLOBAL_SECRET: $GLOBAL_SECRET"
+                echo "JOB_LEVEL_SCRET: $JOB_SECRET"
+                echo "JOB_LEVEL_VAR: $JOB_VAR"
+                
+        # Step level secret
+            - name: Step Level Env & Secret
+              env:
+                STEP_LEVEL_SECRET: "this step level secret"
+                STEP_SECRET: ${{secrets.STEP_SECRET}}
+                STEP_VAR: ${{vars.STEP_VAR}}
+              run: |
+                echo "STEP_LEVEL_SECRET: $STEP_LEVEL_SECRET"
+                echo "STEP_SECRET: $STEP_SECRET"
+                echo "STEP_VAR: $STEP_VAR"
