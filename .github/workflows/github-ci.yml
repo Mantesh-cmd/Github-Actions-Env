@@ -5,6 +5,7 @@ on:
         branches: 
             - main
             - dev-**
+            - stage
     pull_request:
         types: [opened, opened]
     workflow_dispatch:
