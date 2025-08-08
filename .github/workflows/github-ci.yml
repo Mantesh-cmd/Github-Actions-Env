@@ -18,6 +18,7 @@ env:
     
 jobs:
     env-test:
+        environment: staging
         runs-on: ubuntu-latest
 
         #Job level secrets
